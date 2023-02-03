@@ -12,7 +12,7 @@ namespace Event_Calendar_WebApi.Models
         public string LastName { get; set; }
         public string Email { get; set; }
         [StringLength(15)]
-        public string Username { get; set; }
+        public string UserName { get; set; }
         [StringLength(20)]
         public string Password { get; set; }
         [JsonIgnore]

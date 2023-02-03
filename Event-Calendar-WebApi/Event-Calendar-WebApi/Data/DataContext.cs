@@ -16,8 +16,8 @@ namespace Event_Calendar_WebApi.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             List<User> usersInit = new List<User>();
-            usersInit.Add(new User() { UserId = 1, FirstName = "Test 1", LastName = "Test LastName", Email = "test1@gmail.com" , Username = "test1", Password = "12345" });
-            usersInit.Add(new User() { UserId = 2, FirstName = "Test 2", LastName = "Test LastName", Email = "test2@gmail.com", Username = "test2", Password = "12345" });
+            usersInit.Add(new User() { UserId = 1, FirstName = "Test 1", LastName = "Test LastName", Email = "test1@gmail.com" , UserName = "test1", Password = "12345" });
+            usersInit.Add(new User() { UserId = 2, FirstName = "Test 2", LastName = "Test LastName", Email = "test2@gmail.com", UserName = "test2", Password = "12345" });
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("User");
@@ -25,7 +25,7 @@ namespace Event_Calendar_WebApi.Data
                 entity.Property(p => p.FirstName).IsRequired().HasMaxLength(20);
                 entity.Property(p => p.LastName).IsRequired().HasMaxLength(20);
                 entity.Property(p => p.Email).IsRequired(false);
-                entity.Property(p => p.Username).IsRequired().HasMaxLength(15);
+                entity.Property(p => p.UserName).IsRequired().HasMaxLength(15);
                 entity.Property(p => p.Password).IsRequired();
                 entity.HasData(usersInit);
             });
