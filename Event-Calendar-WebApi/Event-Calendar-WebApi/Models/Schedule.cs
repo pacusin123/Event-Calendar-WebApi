@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Event_Calendar_WebApi.Models
 {
@@ -7,9 +8,10 @@ namespace Event_Calendar_WebApi.Models
         public int ScheduleId { get; set; }
         [StringLength(20)]
         public string Name { get; set; }
-        [StringLength(20)]
         public int UserId { get; set; }
-        public User User { get; set; }
-        public List<ScheduleEvent> ScheduleEvents { get; set; }
+        [JsonIgnore]
+        public User? User { get; set; }
+        [JsonIgnore]
+        public List<ScheduleEvent>? ScheduleEvents { get; set; }
     }
 }

@@ -21,6 +21,7 @@ namespace Event_Calendar_WebApi.Data
         public void DeleteUser(User user)
         {
             _context.Remove(user);
+            _context.SaveChanges();
         }
 
         public User GetUser(int userId)
@@ -35,12 +36,12 @@ namespace Event_Calendar_WebApi.Data
 
         public List<User> GetUsersByFilter(string filter)
         {
-            return _context.Users.Where(p=> p.FirstName.Contains(filter) || p.LastName.Contains(filter)).ToList();
+            return _context.Users.Where(p => p.FirstName.Contains(filter) || p.LastName.Contains(filter)).ToList();
         }
 
         public User UpdateUser(User user)
         {
-            _context.Add(user);
+            _context.Update(user);
             _context.SaveChanges();
             return user;
         }

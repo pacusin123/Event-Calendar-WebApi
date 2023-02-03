@@ -8,18 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using Event_Calendar_WebApi.Data;
 using Event_Calendar_WebApi.Models;
 using Event_Calendar_WebApi.Business;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Event_Calendar_WebApi.Controllers
 {
-    [Route("api/controller")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UserController : Controller
     {
         private readonly UserBusiness userBusiness;
 
-        public UserController(DataContext dataContext)
+        public UserController(DataContext dataContext, IConfiguration configuration)
         {
-            userBusiness = new UserBusiness(dataContext);
+            userBusiness = new UserBusiness(dataContext, configuration);
         }
 
         [HttpGet]
@@ -30,13 +31,13 @@ namespace Event_Calendar_WebApi.Controllers
             return users.ToList();
         }
 
-
+        [AllowAnonymous]
         [HttpPost]
         [Route("SaveUser")]
         public User CreateUser([FromBody] User user)
         {
-                var userSaved = userBusiness.CreateUser(user);
-                return userSaved;
+            var userSaved = userBusiness.CreateUser(user);
+            return userSaved;
         }
 
         [HttpPut]
@@ -49,6 +50,7 @@ namespace Event_Calendar_WebApi.Controllers
 
 
         [HttpDelete]
+        [Authorize]
         [Route("DeleteUser/{id}")]
         public IResult DeleteUser(int id)
         {
@@ -70,6 +72,33 @@ namespace Event_Calendar_WebApi.Controllers
         {
             var users = userBusiness.GetUsersByFilter(filter);
             return users.ToList();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("login")]
+        public IActionResult InitSession(string userName, string password)
+        {
+
+            var token = userBusiness.InitSession(userName, password);
+            if (token == null)
+            {
+                return BadRequest(new
+                {
+                    token = "",
+                    message = "Credentials incorrects"
+                });
+            }
+            else
+            {
+                return Ok( new
+                {
+                    token = token,
+                    message = "Login Success"
+
+                });
+
+            }
         }
 
 
