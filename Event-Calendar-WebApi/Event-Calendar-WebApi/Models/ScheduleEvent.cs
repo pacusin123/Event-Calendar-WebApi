@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Event_Calendar_WebApi.Models
 {
@@ -13,6 +14,8 @@ namespace Event_Calendar_WebApi.Models
         public DateTime CreationDate { get; set; }
         public string Place { get; set; }
         public int TypeEventEnum { get; set; }
-        public Schedule Schedule { get; set; }
+        public int? ParentEventId { get; set; }
+        [JsonIgnore]
+        public Schedule? Schedule { get; set; }
     }
 }

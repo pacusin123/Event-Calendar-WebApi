@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Event_Calendar_WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230201204930_CreateInit")]
-    partial class CreateInit
+    [Migration("20230203154154_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -68,7 +68,6 @@ namespace Event_Calendar_WebApi.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("UserId")
-                        .HasMaxLength(20)
                         .HasColumnType("int");
 
                     b.HasKey("ScheduleId");
@@ -113,6 +112,9 @@ namespace Event_Calendar_WebApi.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<int?>("ParentEventId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Place")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -133,7 +135,7 @@ namespace Event_Calendar_WebApi.Migrations
                         new
                         {
                             ScheduleEventId = 1,
-                            CreationDate = new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreationDate = new DateTime(2023, 2, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             Description = "description 1 test",
                             Name = "Event 1",
                             Place = "Brasil",
@@ -143,7 +145,7 @@ namespace Event_Calendar_WebApi.Migrations
                         new
                         {
                             ScheduleEventId = 2,
-                            CreationDate = new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreationDate = new DateTime(2023, 2, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             Description = "description 2 test",
                             Name = "Event 2",
                             Place = "Bolivia",
@@ -178,7 +180,7 @@ namespace Event_Calendar_WebApi.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("Username")
+                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
@@ -194,8 +196,8 @@ namespace Event_Calendar_WebApi.Migrations
                             Email = "test1@gmail.com",
                             FirstName = "Test 1",
                             LastName = "Test LastName",
-                            Password = "12345",
-                            Username = "test1"
+                            Password = "123",
+                            UserName = "test1"
                         },
                         new
                         {
@@ -203,8 +205,8 @@ namespace Event_Calendar_WebApi.Migrations
                             Email = "test2@gmail.com",
                             FirstName = "Test 2",
                             LastName = "Test LastName",
-                            Password = "12345",
-                            Username = "test2"
+                            Password = "123",
+                            UserName = "test2"
                         });
                 });
 
