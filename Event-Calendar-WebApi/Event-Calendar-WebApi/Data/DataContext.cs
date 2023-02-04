@@ -16,8 +16,8 @@ namespace Event_Calendar_WebApi.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             List<User> usersInit = new List<User>();
-            usersInit.Add(new User() { UserId = 1, FirstName = "Test 1", LastName = "Test LastName", Email = "test1@gmail.com" , UserName = "test1", Password = "12345" });
-            usersInit.Add(new User() { UserId = 2, FirstName = "Test 2", LastName = "Test LastName", Email = "test2@gmail.com", UserName = "test2", Password = "12345" });
+            usersInit.Add(new User() { UserId = 1, FirstName = "Test 1", LastName = "Test LastName", Email = "test1@gmail.com" , UserName = "test1", Password = "123" });
+            usersInit.Add(new User() { UserId = 2, FirstName = "Test 2", LastName = "Test LastName", Email = "test2@gmail.com", UserName = "test2", Password = "123" });
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("User");
@@ -67,8 +67,8 @@ namespace Event_Calendar_WebApi.Data
             });
 
             List<ScheduleEvent> scheduleEventsInit = new List<ScheduleEvent>();
-            scheduleEventsInit.Add(new ScheduleEvent() { ScheduleEventId = 1, Name = "Event 1", ScheduleId = 1, Description = "description 1 test", CreationDate = DateTime.Today, Place =  "Brasil", TypeEventEnum = (int)TypeEvent.Exclusive });
-            scheduleEventsInit.Add(new ScheduleEvent() { ScheduleEventId = 2, Name = "Event 2", ScheduleId = 2, Description = "description 2 test", CreationDate = DateTime.Today, Place = "Bolivia", TypeEventEnum = (int)TypeEvent.Share });
+            scheduleEventsInit.Add(new ScheduleEvent() { ScheduleEventId = 1, Name = "Event 1", ScheduleId = 1, Description = "description 1 test", CreationDate = DateTime.Today, Place =  "Brasil", TypeEventEnum = (int)TypeEvent.Exclusive, ParentEventId = null });
+            scheduleEventsInit.Add(new ScheduleEvent() { ScheduleEventId = 2, Name = "Event 2", ScheduleId = 2, Description = "description 2 test", CreationDate = DateTime.Today, Place = "Bolivia", TypeEventEnum = (int)TypeEvent.Share, ParentEventId = null });
             modelBuilder.Entity<ScheduleEvent>(entity =>
             {
                 entity.ToTable("ScheduleEvent");
@@ -78,6 +78,7 @@ namespace Event_Calendar_WebApi.Data
                 entity.Property(p => p.Description).IsRequired(false);
                 entity.Property(p => p.CreationDate).IsRequired();
                 entity.Property(p => p.TypeEventEnum).IsRequired();
+                entity.Property(p => p.ParentEventId);
                 entity.HasData(scheduleEventsInit);
             });
 

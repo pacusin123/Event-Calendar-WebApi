@@ -69,7 +69,7 @@ namespace Event_Calendar_WebApi.Controllers
         [Route("GetScheduleByUserId/{id}")]
         public Schedule GetScheduleByUserId(int id)
         {
-            var schedule = scheduleBusiness.GetSchedule(id);
+            var schedule = scheduleBusiness.GetScheduleByUserId(id);
             return schedule;
         }
 
