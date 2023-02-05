@@ -89,6 +89,22 @@ namespace Event_Calendar_WebApi.Controllers
             return users.ToList();
         }
 
+        [HttpPost]
+        [Route("GetScheduleEventsByDate")]
+        public List<ScheduleEvent> GetScheduleEventsByDate(DateTime eventDate, bool withTime)
+        {
+            var users = scheduleEventBusiness.GetScheduleEventsByDate(eventDate, withTime);
+            return users.ToList();
+        }
+
+        [HttpPost]
+        [Route("getScheduleEventsSharedByDate")]
+        public List<ScheduleEvent> getScheduleEventsSharedByDate([FromBody] ScheduleEventParameters scheduleEventParameters)
+        {
+            var users = scheduleEventBusiness.getScheduleEventsSharedByDate(scheduleEventParameters.ScheduleId, scheduleEventParameters.EventDate, scheduleEventParameters.WithTime);
+            return users.ToList();
+        }
+
 
     }
 }
