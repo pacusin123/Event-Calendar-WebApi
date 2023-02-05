@@ -1,4 +1,5 @@
-﻿using Event_Calendar_WebApi.Contracts;
+﻿using Event_Calendar_WebApi.Business.Exceptions;
+using Event_Calendar_WebApi.Contracts;
 using Event_Calendar_WebApi.Data;
 using Event_Calendar_WebApi.Models;
 using Microsoft.IdentityModel.Tokens;
@@ -19,7 +20,11 @@ namespace Event_Calendar_WebApi.Business
 
         public ScheduleEvent CreateScheduleEvent(ScheduleEvent scheduleEvent)
         {
+            var events = GetScheduleEvents();
+            if (events.Any(p => p.CreationDate == scheduleEvent.CreationDate && scheduleEvent.TypeEventEnum == (int)TypeEvent.Exclusive))
+                throw new ScheduleEventException("Exist other event exclusive with same time, this event cannot be saved");
             return scheduleEventDataAccess.CreateScheduleEvent(scheduleEvent);
+
         }
 
         public ScheduleEvent UpdateScheduleEvent(ScheduleEvent scheduleEvent)
@@ -43,6 +48,11 @@ namespace Event_Calendar_WebApi.Business
             return scheduleEventDataAccess.GetScheduleEventsByFilter(filter);
         }
 
+        public List<ScheduleEvent> GetScheduleEventsByDate(DateTime eventDate,bool withTime)
+        {
+            return filterScheduleEventByDate(GetScheduleEvents(), eventDate, withTime);
+        }
+
         public ScheduleEvent GetScheduleEvent(int scheduleEventId)
         {
             return scheduleEventDataAccess.GetScheduleEvent(scheduleEventId);
@@ -50,20 +60,34 @@ namespace Event_Calendar_WebApi.Business
 
         public List<ScheduleEvent> GetScheduleEventsByScheduleId(int scheduleId)
         {
-            var scheduleEvents = this.GetScheduleEvents().Where(p => p.ScheduleId == scheduleId);
+            var scheduleEvents = GetScheduleEvents().Where(p => p.ScheduleId == scheduleId);
             return scheduleEvents.ToList();
         }
 
         public List<ScheduleEvent> GetScheduleEventShared(int scheduleId)
         {
-            var scheduleEventsSharedAll = this.GetScheduleEvents().Where(p => p.ScheduleId != scheduleId && p.TypeEventEnum == (int)TypeEvent.Share && p.ParentEventId == null).ToList();
-            var scheduleEventsWithParentId = this.GetScheduleEvents().Where(p => p.ScheduleId == scheduleId && p.ParentEventId != null).Select(p=> p.ParentEventId);
+            var scheduleEventsSharedAll = GetScheduleEvents().Where(p => p.ScheduleId != scheduleId && p.TypeEventEnum == (int)TypeEvent.Share && p.ParentEventId == null).ToList();
+            var scheduleEventsWithParentId = GetScheduleEvents().Where(p => p.ScheduleId == scheduleId && p.ParentEventId != null).Select(p => p.ParentEventId);
             foreach (var item in scheduleEventsSharedAll.ToList())
             {
                 if (scheduleEventsWithParentId.Any(d => d == item.ScheduleEventId))
                     scheduleEventsSharedAll.Remove(item);
             }
             return scheduleEventsSharedAll;
+        }
+
+        public List<ScheduleEvent> getScheduleEventsSharedByDate(int scheduleId, DateTime eventDate, bool withTime)
+        {
+            return filterScheduleEventByDate(GetScheduleEventShared(scheduleId), eventDate, withTime);
+        }
+
+        private List<ScheduleEvent> filterScheduleEventByDate(List<ScheduleEvent> scheduleEvents, DateTime eventDate, bool withTime)
+        {
+            if (withTime)
+            {
+                return scheduleEvents.Where(p => p.CreationDate == eventDate).ToList();
+            }
+            return scheduleEvents.Where(p => p.CreationDate.Year == eventDate.Year && p.CreationDate.Month == eventDate.Month && p.CreationDate.Day == eventDate.Day).ToList();
         }
     }
 }
