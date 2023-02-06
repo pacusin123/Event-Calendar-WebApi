@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Y+egIyDcT+iUbCI4gMY8eQYKbjInmtnq6tOs39cZW7byccE20b4KoYxV1fp/WRzKbauu3/EXX7wZLkvjf88mNw==",
+  "dgSpecHash": "/KsCiWEOnaNTHWMAidYuXkRyMGHPMrYqgmPpLD+zWHshgb1aHtkR5MxK4oWzeMpZBd5LQUBk42ycTmtm+V7xLg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\marco.aguilar\\Documents\\project iatec brasil\\Event-Calendar-WebApi\\Event-Calendar-WebApi\\Event-Calendar-WebApi\\Event-Calendar-WebApi.csproj",
+  "projectFilePath": "C:\\Users\\marco.aguilar\\Desktop\\Test Sistema\\WebAppi\\Event-Calendar-WebApi\\Event-Calendar-WebApi\\Event-Calendar-WebApi\\Event-Calendar-WebApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\marco.aguilar\\.nuget\\packages\\fluentvalidation\\11.2.1\\fluentvalidation.11.2.1.nupkg.sha512",
     "C:\\Users\\marco.aguilar\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.2.2\\fluentvalidation.aspnetcore.11.2.2.nupkg.sha512",

@@ -10086,14 +10086,13 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\marco.aguilar\\Documents\\project iatec brasil\\Event-Calendar-WebApi\\Event-Calendar-WebApi\\Event-Calendar-WebApi\\Event-Calendar-WebApi.csproj",
+      "projectUniqueName": "C:\\Users\\marco.aguilar\\Desktop\\Test Sistema\\WebAppi\\Event-Calendar-WebApi\\Event-Calendar-WebApi\\Event-Calendar-WebApi\\Event-Calendar-WebApi.csproj",
       "projectName": "Event-Calendar-WebApi",
-      "projectPath": "C:\\Users\\marco.aguilar\\Documents\\project iatec brasil\\Event-Calendar-WebApi\\Event-Calendar-WebApi\\Event-Calendar-WebApi\\Event-Calendar-WebApi.csproj",
+      "projectPath": "C:\\Users\\marco.aguilar\\Desktop\\Test Sistema\\WebAppi\\Event-Calendar-WebApi\\Event-Calendar-WebApi\\Event-Calendar-WebApi\\Event-Calendar-WebApi.csproj",
       "packagesPath": "C:\\Users\\marco.aguilar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\marco.aguilar\\Documents\\project iatec brasil\\Event-Calendar-WebApi\\Event-Calendar-WebApi\\Event-Calendar-WebApi\\obj\\",
+      "outputPath": "C:\\Users\\marco.aguilar\\Desktop\\Test Sistema\\WebAppi\\Event-Calendar-WebApi\\Event-Calendar-WebApi\\Event-Calendar-WebApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\marco.aguilar\\Documents\\NuGet.Config",
         "C:\\Users\\marco.aguilar\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -10102,8 +10101,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {},
-        "https://sda-iatec.pkgs.visualstudio.com/_packaging/AASI.net/nuget/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
