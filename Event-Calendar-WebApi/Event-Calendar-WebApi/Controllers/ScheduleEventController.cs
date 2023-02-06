@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Event_Calendar_WebApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ScheduleEventController : Controller
     {
@@ -49,7 +50,7 @@ namespace Event_Calendar_WebApi.Controllers
 
 
         [HttpDelete]
-        [Authorize]
+        [Authorize(Roles = "test1")]
         [Route("DeleteScheduleEvent/{id}")]
         public IResult DeleteScheduleEvent(int id)
         {

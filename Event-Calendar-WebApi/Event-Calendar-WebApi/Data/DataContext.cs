@@ -11,25 +11,12 @@ namespace Event_Calendar_WebApi.Data
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Role> Roles { get; set; }
+
         public DbSet<ScheduleEvent> ScheduleEvents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            List<User> usersInit = new List<User>();
-            usersInit.Add(new User() { UserId = 1, FirstName = "Test 1", LastName = "Test LastName", Email = "test1@gmail.com" , UserName = "test1", Password = "123" });
-            usersInit.Add(new User() { UserId = 2, FirstName = "Test 2", LastName = "Test LastName", Email = "test2@gmail.com", UserName = "test2", Password = "123" });
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.ToTable("User");
-                entity.HasKey(p => p.UserId);                
-                entity.Property(p => p.FirstName).IsRequired().HasMaxLength(20);
-                entity.Property(p => p.LastName).IsRequired().HasMaxLength(20);
-                entity.Property(p => p.Email).IsRequired(false);
-                entity.Property(p => p.UserName).IsRequired().HasMaxLength(15);
-                entity.Property(p => p.Password).IsRequired();
-                entity.HasData(usersInit);
-            });
-
             List<Role> rolesInit = new List<Role>();
             rolesInit.Add(new Role() { RoleId = 1, Name = "Admin" });
             rolesInit.Add(new Role() { RoleId = 2, Name = "UserLocal" });
@@ -41,19 +28,22 @@ namespace Event_Calendar_WebApi.Data
                 entity.HasData(rolesInit);
             });
 
-            List<UserRole> userRolesInit = new List<UserRole>();
-            userRolesInit.Add(new UserRole() { UserRoleId = 1, UserId = 1, RoleId = 1 });
-            userRolesInit.Add(new UserRole() { UserRoleId = 2, UserId = 2, RoleId = 2 });
-            modelBuilder.Entity<UserRole>(entity =>
+            List<User> usersInit = new List<User>();
+            usersInit.Add(new User() { UserId = 1, FirstName = "Test 1", LastName = "Test LastName", Email = "test1@gmail.com" , UserName = "test1", Password = "123", RoleId = 1 });
+            usersInit.Add(new User() { UserId = 2, FirstName = "Test 2", LastName = "Test LastName", Email = "test2@gmail.com", UserName = "test2", Password = "123",  RoleId = 2 });
+            modelBuilder.Entity<User>(entity =>
             {
-                entity.ToTable("UserRole");
-                entity.HasKey(p => p.UserRoleId);
-                entity.HasOne(p => p.Role).WithMany(p => p.UserRoles).HasForeignKey(p => p.RoleId);
-                entity.HasOne(p => p.User).WithMany(p => p.UserRoles).HasForeignKey(p => p.UserId);
-                entity.Property(p => p.UserId).IsRequired();
-                entity.HasData(userRolesInit);
-            });
-
+                entity.ToTable("User");
+                entity.HasKey(p => p.UserId);                
+                entity.Property(p => p.FirstName).IsRequired().HasMaxLength(20);
+                entity.Property(p => p.LastName).IsRequired().HasMaxLength(20);
+                entity.Property(p => p.Email).IsRequired(false);
+                entity.Property(p => p.UserName).IsRequired().HasMaxLength(15);
+                entity.Property(p => p.Password).IsRequired();
+                entity.HasOne(p => p.Role).WithMany(p => p.Users).HasForeignKey(p => p.RoleId);
+                entity.HasData(usersInit);
+            });            
+            
             List<Schedule> schedulesInit = new List<Schedule>();
             schedulesInit.Add(new Schedule() { ScheduleId = 1, Name = "Schedule 1", UserId = 1 });
             schedulesInit.Add(new Schedule() { ScheduleId = 2, Name = "Schedule 2", UserId = 2 });

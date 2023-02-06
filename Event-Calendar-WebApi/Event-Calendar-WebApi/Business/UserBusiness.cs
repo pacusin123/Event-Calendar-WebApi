@@ -1,6 +1,8 @@
-﻿using Event_Calendar_WebApi.Contracts;
+﻿using Event_Calendar_WebApi.Business.Exceptions;
+using Event_Calendar_WebApi.Contracts;
 using Event_Calendar_WebApi.Data;
 using Event_Calendar_WebApi.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -11,15 +13,25 @@ namespace Event_Calendar_WebApi.Business
     public class UserBusiness
     {
         private IUserData userDataAccess;
-        private IConfiguration _configuration;
-        public UserBusiness(DataContext dataContext, IConfiguration configuration)
+        private RoleBusiness roleBusiness;
+        public UserBusiness(DataContext dataContext)
         {
             userDataAccess = new UserData(dataContext);
-            _configuration = configuration;
+            roleBusiness = new RoleBusiness(dataContext);
         }
 
         public User CreateUser(User user)
         {
+            var userLogin = GetUsers().Where(p => p.UserName == user.UserName && p.Password == user.Password).ToList();
+            if (userLogin.Count > 0)
+                throw new Exception("username already exists, please change your username");
+            if(user.RoleId == 0)
+            {
+                var role = roleBusiness.GetRoleByName("UserLocal");
+                if (role == null)
+                    throw new RoleException("The role user local no exists, please contact with admin");
+                user.RoleId = role.RoleId;
+            }
             return userDataAccess.CreateUser(user);
         }
 
@@ -47,35 +59,6 @@ namespace Event_Calendar_WebApi.Business
         public User GetUser(int userId)
         {
             return userDataAccess.GetUser(userId);
-        }
-
-        public String InitSession(string userName, string Password)
-        {
-            var user = GetUsers().Where(p => p.UserName == userName && p.Password == Password).FirstOrDefault();
-            if (user == null)
-                return "";
-
-            var jwt = _configuration.GetSection("Jwt").Get<Jwt>();
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, jwt.Subject),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                new Claim("UserId", user.UserId.ToString()),
-                new Claim("FirstName", user.FirstName),
-                new Claim("LastName", user.LastName)
-            };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key));
-            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-                jwt.Issuer,
-                jwt.Audience,
-                claims,
-                expires: DateTime.Now.AddMinutes(60),
-                signingCredentials: signIn
-                );
-            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

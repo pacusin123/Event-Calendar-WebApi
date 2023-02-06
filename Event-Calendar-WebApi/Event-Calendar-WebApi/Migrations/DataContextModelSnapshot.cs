@@ -133,7 +133,7 @@ namespace Event_Calendar_WebApi.Migrations
                         new
                         {
                             ScheduleEventId = 1,
-                            CreationDate = new DateTime(2023, 2, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreationDate = new DateTime(2023, 2, 5, 0, 0, 0, 0, DateTimeKind.Local),
                             Description = "description 1 test",
                             Name = "Event 1",
                             Place = "Brasil",
@@ -143,7 +143,7 @@ namespace Event_Calendar_WebApi.Migrations
                         new
                         {
                             ScheduleEventId = 2,
-                            CreationDate = new DateTime(2023, 2, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreationDate = new DateTime(2023, 2, 5, 0, 0, 0, 0, DateTimeKind.Local),
                             Description = "description 2 test",
                             Name = "Event 2",
                             Place = "Bolivia",
@@ -178,12 +178,17 @@ namespace Event_Calendar_WebApi.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
                     b.HasKey("UserId");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("User", (string)null);
 
@@ -195,6 +200,7 @@ namespace Event_Calendar_WebApi.Migrations
                             FirstName = "Test 1",
                             LastName = "Test LastName",
                             Password = "123",
+                            RoleId = 1,
                             UserName = "test1"
                         },
                         new
@@ -204,44 +210,8 @@ namespace Event_Calendar_WebApi.Migrations
                             FirstName = "Test 2",
                             LastName = "Test LastName",
                             Password = "123",
-                            UserName = "test2"
-                        });
-                });
-
-            modelBuilder.Entity("Event_Calendar_WebApi.Models.UserRole", b =>
-                {
-                    b.Property<int>("UserRoleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserRoleId"), 1L, 1);
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserRoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserRole", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserRoleId = 1,
-                            RoleId = 1,
-                            UserId = 1
-                        },
-                        new
-                        {
-                            UserRoleId = 2,
                             RoleId = 2,
-                            UserId = 2
+                            UserName = "test2"
                         });
                 });
 
@@ -267,28 +237,20 @@ namespace Event_Calendar_WebApi.Migrations
                     b.Navigation("Schedule");
                 });
 
-            modelBuilder.Entity("Event_Calendar_WebApi.Models.UserRole", b =>
+            modelBuilder.Entity("Event_Calendar_WebApi.Models.User", b =>
                 {
                     b.HasOne("Event_Calendar_WebApi.Models.Role", "Role")
-                        .WithMany("UserRoles")
+                        .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Event_Calendar_WebApi.Models.User", "User")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Role");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Event_Calendar_WebApi.Models.Role", b =>
                 {
-                    b.Navigation("UserRoles");
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Event_Calendar_WebApi.Models.Schedule", b =>
@@ -299,8 +261,6 @@ namespace Event_Calendar_WebApi.Migrations
             modelBuilder.Entity("Event_Calendar_WebApi.Models.User", b =>
                 {
                     b.Navigation("Schedule");
-
-                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }
