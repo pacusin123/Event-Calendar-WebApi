@@ -77,6 +77,7 @@ namespace Event_Calendar_WebApi.Migrations
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Place = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Participants = table.Column<int>(type: "int", nullable: false),
                     TypeEventEnum = table.Column<int>(type: "int", nullable: false),
                     ParentEventId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -104,12 +105,12 @@ namespace Event_Calendar_WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "UserId", "Email", "FirstName", "LastName", "Password", "RoleId", "UserName" },
-                values: new object[] { 1, "test1@gmail.com", "Test 1", "Test LastName", "123", 1, "test1" });
+                values: new object[] { 1, "marco.aguilar@gmail.com", "Marco", "Aguilar", "123", 1, "marco" });
 
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "UserId", "Email", "FirstName", "LastName", "Password", "RoleId", "UserName" },
-                values: new object[] { 2, "test2@gmail.com", "Test 2", "Test LastName", "123", 2, "test2" });
+                values: new object[] { 2, "jose@gmail.com", "Jose", "Ramos", "123", 2, "jose" });
 
             migrationBuilder.InsertData(
                 table: "Schedule",
@@ -123,13 +124,13 @@ namespace Event_Calendar_WebApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "ScheduleEvent",
-                columns: new[] { "ScheduleEventId", "CreationDate", "Description", "Name", "ParentEventId", "Place", "ScheduleId", "TypeEventEnum" },
-                values: new object[] { 1, new DateTime(2023, 2, 5, 0, 0, 0, 0, DateTimeKind.Local), "description 1 test", "Event 1", null, "Brasil", 1, 1 });
+                columns: new[] { "ScheduleEventId", "CreationDate", "Description", "Name", "ParentEventId", "Participants", "Place", "ScheduleId", "TypeEventEnum" },
+                values: new object[] { 1, new DateTime(2023, 2, 6, 0, 0, 0, 0, DateTimeKind.Local), "visitar a un colega", "Event Visita", null, 2, "Brasil", 1, 1 });
 
             migrationBuilder.InsertData(
                 table: "ScheduleEvent",
-                columns: new[] { "ScheduleEventId", "CreationDate", "Description", "Name", "ParentEventId", "Place", "ScheduleId", "TypeEventEnum" },
-                values: new object[] { 2, new DateTime(2023, 2, 5, 0, 0, 0, 0, DateTimeKind.Local), "description 2 test", "Event 2", null, "Bolivia", 2, 2 });
+                columns: new[] { "ScheduleEventId", "CreationDate", "Description", "Name", "ParentEventId", "Participants", "Place", "ScheduleId", "TypeEventEnum" },
+                values: new object[] { 2, new DateTime(2023, 2, 6, 0, 0, 0, 0, DateTimeKind.Local), "reunion familiar", "Event Familia", null, 5, "Bolivia", 2, 2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Schedule_UserId",

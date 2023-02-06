@@ -1,4 +1,5 @@
 using Event_Calendar_WebApi.Data;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
@@ -10,9 +11,13 @@ using System.Text;
 var myAllowSpecificOrigns = "_myAllowsSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddFluentValidation(config =>
+{
+    config.RegisterValidatorsFromAssembly(typeof(Program).Assembly);
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>

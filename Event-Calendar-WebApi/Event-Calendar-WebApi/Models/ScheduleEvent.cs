@@ -13,6 +13,7 @@ namespace Event_Calendar_WebApi.Models
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }
         public string Place { get; set; }
+        public int Participants { get; set; }
         public int TypeEventEnum { get; set; }
         public int? ParentEventId { get; set; }
         [JsonIgnore]

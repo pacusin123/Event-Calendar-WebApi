@@ -9,7 +9,6 @@ namespace Event_Calendar_WebApi.Models
         [StringLength(20)]
         public string Name { get; set; }
         public int UserId { get; set; }
-        [JsonIgnore]
         public User? User { get; set; }
         public List<ScheduleEvent>? ScheduleEvents { get; set; }
     }

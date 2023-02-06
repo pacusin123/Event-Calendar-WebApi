@@ -50,7 +50,6 @@ namespace Event_Calendar_WebApi.Controllers
 
 
         [HttpDelete]
-        [Authorize(Roles = "test1")]
         [Route("DeleteScheduleEvent/{id}")]
         public IResult DeleteScheduleEvent(int id)
         {

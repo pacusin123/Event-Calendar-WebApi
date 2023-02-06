@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Event_Calendar_WebApi.Data
 {
-    public class DataContext: DbContext
+    public class DataContext : DbContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
@@ -29,12 +29,13 @@ namespace Event_Calendar_WebApi.Data
             });
 
             List<User> usersInit = new List<User>();
-            usersInit.Add(new User() { UserId = 1, FirstName = "Test 1", LastName = "Test LastName", Email = "test1@gmail.com" , UserName = "test1", Password = "123", RoleId = 1 });
-            usersInit.Add(new User() { UserId = 2, FirstName = "Test 2", LastName = "Test LastName", Email = "test2@gmail.com", UserName = "test2", Password = "123",  RoleId = 2 });
+            usersInit.Add(new User() { UserId = 1, FirstName = "Marco", LastName = "Aguilar", Email = "marco@gmail.com", UserName = "marco", Password = "marco", RoleId = 1 });
+            usersInit.Add(new User() { UserId = 2, FirstName = "Jose", LastName = "Ramos", Email = "jose@gmail.com", UserName = "jose", Password = "jose", RoleId = 2 });
+            usersInit.Add(new User() { UserId = 3, FirstName = "Maria", LastName = "Quiroz", Email = "maria@gmail.com", UserName = "maria", Password = "maria", RoleId = 2 });
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("User");
-                entity.HasKey(p => p.UserId);                
+                entity.HasKey(p => p.UserId);
                 entity.Property(p => p.FirstName).IsRequired().HasMaxLength(20);
                 entity.Property(p => p.LastName).IsRequired().HasMaxLength(20);
                 entity.Property(p => p.Email).IsRequired(false);
@@ -42,11 +43,11 @@ namespace Event_Calendar_WebApi.Data
                 entity.Property(p => p.Password).IsRequired();
                 entity.HasOne(p => p.Role).WithMany(p => p.Users).HasForeignKey(p => p.RoleId);
                 entity.HasData(usersInit);
-            });            
-            
+            });
+
             List<Schedule> schedulesInit = new List<Schedule>();
-            schedulesInit.Add(new Schedule() { ScheduleId = 1, Name = "Schedule 1", UserId = 1 });
-            schedulesInit.Add(new Schedule() { ScheduleId = 2, Name = "Schedule 2", UserId = 2 });
+            schedulesInit.Add(new Schedule() { ScheduleId = 1, Name = "Schedule 2023 M ", UserId = 1 });
+            schedulesInit.Add(new Schedule() { ScheduleId = 2, Name = "Schedule 2023 J ", UserId = 2 });
             modelBuilder.Entity<Schedule>(entity =>
             {
                 entity.ToTable("Schedule");
@@ -57,18 +58,19 @@ namespace Event_Calendar_WebApi.Data
             });
 
             List<ScheduleEvent> scheduleEventsInit = new List<ScheduleEvent>();
-            scheduleEventsInit.Add(new ScheduleEvent() { ScheduleEventId = 1, Name = "Event 1", ScheduleId = 1, Description = "description 1 test", CreationDate = DateTime.Today, Place =  "Brasil", TypeEventEnum = (int)TypeEvent.Exclusive, ParentEventId = null });
-            scheduleEventsInit.Add(new ScheduleEvent() { ScheduleEventId = 2, Name = "Event 2", ScheduleId = 2, Description = "description 2 test", CreationDate = DateTime.Today, Place = "Bolivia", TypeEventEnum = (int)TypeEvent.Share, ParentEventId = null });
+            scheduleEventsInit.Add(new ScheduleEvent() { ScheduleEventId = 1, Name = "Event Visita", ScheduleId = 1, Description = "visitar a un colega", CreationDate = DateTime.Today, Place = "Brasil", Participants = 2, TypeEventEnum = (int)TypeEvent.Exclusive, ParentEventId = null });
+            scheduleEventsInit.Add(new ScheduleEvent() { ScheduleEventId = 2, Name = "Event Familia", ScheduleId = 2, Description = "reunion familiar", CreationDate = DateTime.Today, Place = "Bolivia", Participants = 5, TypeEventEnum = (int)TypeEvent.Share, ParentEventId = null });
             modelBuilder.Entity<ScheduleEvent>(entity =>
             {
                 entity.ToTable("ScheduleEvent");
                 entity.HasKey(p => p.ScheduleEventId);
-                entity.HasOne(p => p.Schedule).WithMany(p => p.ScheduleEvents).HasForeignKey(p=> p.ScheduleId);
+                entity.HasOne(p => p.Schedule).WithMany(p => p.ScheduleEvents).HasForeignKey(p => p.ScheduleId);
                 entity.Property(p => p.Name).IsRequired().HasMaxLength(20);
                 entity.Property(p => p.Description).IsRequired(false);
                 entity.Property(p => p.CreationDate).IsRequired();
+                entity.Property(p => p.Participants).IsRequired();
                 entity.Property(p => p.TypeEventEnum).IsRequired();
-                entity.Property(p => p.ParentEventId);
+                entity.Property(p => p.ParentEventId).IsRequired(false);
                 entity.HasData(scheduleEventsInit);
             });
 
