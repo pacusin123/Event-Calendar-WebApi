@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Event_Calendar_WebApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ScheduleController : Controller
     {

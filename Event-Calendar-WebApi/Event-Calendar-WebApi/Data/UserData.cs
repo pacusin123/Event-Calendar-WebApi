@@ -1,5 +1,6 @@
 ﻿using Event_Calendar_WebApi.Contracts;
 using Event_Calendar_WebApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Event_Calendar_WebApi.Data
 {
@@ -31,7 +32,7 @@ namespace Event_Calendar_WebApi.Data
 
         public List<User> GetUsers()
         {
-            return _context.Users.ToList();
+            return _context.Users.Include(p => p.Role).ToList();
         }
 
         public List<User> GetUsersByFilter(string filter)
