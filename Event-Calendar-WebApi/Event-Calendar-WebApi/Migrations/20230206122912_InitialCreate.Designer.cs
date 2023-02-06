@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Event_Calendar_WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230206022825_InitialCreate")]
+    [Migration("20230206122912_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -115,6 +115,9 @@ namespace Event_Calendar_WebApi.Migrations
                     b.Property<int?>("ParentEventId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Participants")
+                        .HasColumnType("int");
+
                     b.Property<string>("Place")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -135,9 +138,10 @@ namespace Event_Calendar_WebApi.Migrations
                         new
                         {
                             ScheduleEventId = 1,
-                            CreationDate = new DateTime(2023, 2, 5, 0, 0, 0, 0, DateTimeKind.Local),
-                            Description = "description 1 test",
-                            Name = "Event 1",
+                            CreationDate = new DateTime(2023, 2, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            Description = "visitar a un colega",
+                            Name = "Event Visita",
+                            Participants = 2,
                             Place = "Brasil",
                             ScheduleId = 1,
                             TypeEventEnum = 1
@@ -145,9 +149,10 @@ namespace Event_Calendar_WebApi.Migrations
                         new
                         {
                             ScheduleEventId = 2,
-                            CreationDate = new DateTime(2023, 2, 5, 0, 0, 0, 0, DateTimeKind.Local),
-                            Description = "description 2 test",
-                            Name = "Event 2",
+                            CreationDate = new DateTime(2023, 2, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            Description = "reunion familiar",
+                            Name = "Event Familia",
+                            Participants = 5,
                             Place = "Bolivia",
                             ScheduleId = 2,
                             TypeEventEnum = 2
@@ -198,22 +203,22 @@ namespace Event_Calendar_WebApi.Migrations
                         new
                         {
                             UserId = 1,
-                            Email = "test1@gmail.com",
-                            FirstName = "Test 1",
-                            LastName = "Test LastName",
+                            Email = "marco.aguilar@gmail.com",
+                            FirstName = "Marco",
+                            LastName = "Aguilar",
                             Password = "123",
                             RoleId = 1,
-                            UserName = "test1"
+                            UserName = "marco"
                         },
                         new
                         {
                             UserId = 2,
-                            Email = "test2@gmail.com",
-                            FirstName = "Test 2",
-                            LastName = "Test LastName",
+                            Email = "jose@gmail.com",
+                            FirstName = "Jose",
+                            LastName = "Ramos",
                             Password = "123",
                             RoleId = 2,
-                            UserName = "test2"
+                            UserName = "jose"
                         });
                 });
 

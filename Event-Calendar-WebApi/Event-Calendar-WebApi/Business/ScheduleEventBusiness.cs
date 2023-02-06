@@ -23,6 +23,9 @@ namespace Event_Calendar_WebApi.Business
             var events = GetScheduleEvents();
             if (events.Any(p => p.CreationDate == scheduleEvent.CreationDate && scheduleEvent.TypeEventEnum == (int)TypeEvent.Exclusive))
                 throw new ScheduleEventException("Exist other event exclusive with same time, this event cannot be saved");
+            var eventsShared = events.Where(p => p.ParentEventId == scheduleEvent.ParentEventId);
+            if (scheduleEvent.ParentEventId != null && eventsShared.Count() >= scheduleEvent.Participants)
+                throw new Exception("The number of participants has been exceeded, this event cannot be saved in your schedule");
             return scheduleEventDataAccess.CreateScheduleEvent(scheduleEvent);
 
         }
@@ -60,6 +63,8 @@ namespace Event_Calendar_WebApi.Business
 
         public List<ScheduleEvent> GetScheduleEventsByScheduleId(int scheduleId)
         {
+            if (scheduleId == 0)
+                throw new ScheduleEventException("There is no schedule created, please add an schedule");
             var scheduleEvents = GetScheduleEvents().Where(p => p.ScheduleId == scheduleId);
             return scheduleEvents.ToList();
         }
@@ -78,6 +83,8 @@ namespace Event_Calendar_WebApi.Business
 
         public List<ScheduleEvent> getScheduleEventsSharedByDate(int scheduleId, DateTime eventDate, bool withTime)
         {
+            if (scheduleId == 0)
+                throw new ScheduleEventException("There is no schedule created, please add an schedule");
             return filterScheduleEventByDate(GetScheduleEventShared(scheduleId), eventDate, withTime);
         }
 

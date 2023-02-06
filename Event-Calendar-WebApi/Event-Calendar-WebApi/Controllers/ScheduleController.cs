@@ -18,10 +18,11 @@ namespace Event_Calendar_WebApi.Controllers
     public class ScheduleController : Controller
     {
         private readonly ScheduleBusiness scheduleBusiness;
-
+        private readonly ScheduleEventBusiness scheduleEventBusiness;
         public ScheduleController(DataContext dataContext)
         {
             scheduleBusiness = new ScheduleBusiness(dataContext);
+            scheduleEventBusiness = new ScheduleEventBusiness(dataContext);
         }
 
         [HttpGet]
@@ -54,6 +55,11 @@ namespace Event_Calendar_WebApi.Controllers
         [Route("DeleteSchedule/{id}")]
         public IResult DeleteSchedule(int id)
         {
+            var events = scheduleEventBusiness.GetScheduleEventsByScheduleId(id);
+            foreach (var item in events)
+            {
+                scheduleEventBusiness.DeleteScheduleEvent(item.ScheduleEventId);
+            }
             scheduleBusiness.DeleteSchedule(id);
             return Results.Ok();
         }
