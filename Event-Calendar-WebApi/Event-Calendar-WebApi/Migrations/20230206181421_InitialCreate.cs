@@ -105,22 +105,27 @@ namespace Event_Calendar_WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "UserId", "Email", "FirstName", "LastName", "Password", "RoleId", "UserName" },
-                values: new object[] { 1, "marco.aguilar@gmail.com", "Marco", "Aguilar", "123", 1, "marco" });
+                values: new object[] { 1, "marco@gmail.com", "Marco", "Aguilar", "marco", 1, "marco" });
 
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "UserId", "Email", "FirstName", "LastName", "Password", "RoleId", "UserName" },
-                values: new object[] { 2, "jose@gmail.com", "Jose", "Ramos", "123", 2, "jose" });
+                values: new object[] { 2, "jose@gmail.com", "Jose", "Ramos", "jose", 2, "jose" });
+
+            migrationBuilder.InsertData(
+                table: "User",
+                columns: new[] { "UserId", "Email", "FirstName", "LastName", "Password", "RoleId", "UserName" },
+                values: new object[] { 3, "maria@gmail.com", "Maria", "Quiroz", "maria", 2, "maria" });
 
             migrationBuilder.InsertData(
                 table: "Schedule",
                 columns: new[] { "ScheduleId", "Name", "UserId" },
-                values: new object[] { 1, "Schedule 1", 1 });
+                values: new object[] { 1, "Schedule 2023 M ", 1 });
 
             migrationBuilder.InsertData(
                 table: "Schedule",
                 columns: new[] { "ScheduleId", "Name", "UserId" },
-                values: new object[] { 2, "Schedule 2", 2 });
+                values: new object[] { 2, "Schedule 2023 J ", 2 });
 
             migrationBuilder.InsertData(
                 table: "ScheduleEvent",

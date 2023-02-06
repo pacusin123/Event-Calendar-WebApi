@@ -20,8 +20,8 @@ namespace Event_Calendar_WebApi.Business
 
         public ScheduleEvent CreateScheduleEvent(ScheduleEvent scheduleEvent)
         {
-            var events = GetScheduleEvents();
-            if (events.Any(p => p.CreationDate == scheduleEvent.CreationDate && scheduleEvent.TypeEventEnum == (int)TypeEvent.Exclusive))
+            var events = GetScheduleEventsByScheduleId(scheduleEvent.ScheduleId);
+            if (events.Any(p => p.CreationDate == scheduleEvent.CreationDate && p.TypeEventEnum == (int)TypeEvent.Exclusive && scheduleEvent.TypeEventEnum == (int)TypeEvent.Exclusive))
                 throw new ScheduleEventException("Exist other event exclusive with same time, this event cannot be saved");
             var eventsShared = events.Where(p => p.ParentEventId == scheduleEvent.ParentEventId);
             if (scheduleEvent.ParentEventId != null && eventsShared.Count() >= scheduleEvent.Participants)

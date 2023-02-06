@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Event_Calendar_WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230206122912_InitialCreate")]
+    [Migration("20230206181421_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -81,13 +81,13 @@ namespace Event_Calendar_WebApi.Migrations
                         new
                         {
                             ScheduleId = 1,
-                            Name = "Schedule 1",
+                            Name = "Schedule 2023 M ",
                             UserId = 1
                         },
                         new
                         {
                             ScheduleId = 2,
-                            Name = "Schedule 2",
+                            Name = "Schedule 2023 J ",
                             UserId = 2
                         });
                 });
@@ -203,10 +203,10 @@ namespace Event_Calendar_WebApi.Migrations
                         new
                         {
                             UserId = 1,
-                            Email = "marco.aguilar@gmail.com",
+                            Email = "marco@gmail.com",
                             FirstName = "Marco",
                             LastName = "Aguilar",
-                            Password = "123",
+                            Password = "marco",
                             RoleId = 1,
                             UserName = "marco"
                         },
@@ -216,9 +216,19 @@ namespace Event_Calendar_WebApi.Migrations
                             Email = "jose@gmail.com",
                             FirstName = "Jose",
                             LastName = "Ramos",
-                            Password = "123",
+                            Password = "jose",
                             RoleId = 2,
                             UserName = "jose"
+                        },
+                        new
+                        {
+                            UserId = 3,
+                            Email = "maria@gmail.com",
+                            FirstName = "Maria",
+                            LastName = "Quiroz",
+                            Password = "maria",
+                            RoleId = 2,
+                            UserName = "maria"
                         });
                 });
 
